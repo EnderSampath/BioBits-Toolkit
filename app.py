@@ -155,6 +155,18 @@ def gc_skew_route():
         }
     return render_template('gc_skew.html', result=result)
 
+from flask import send_from_directory
+import os
+
+@app.route('/resources')
+def resources_index():
+    return render_template('resources.html')
+
+@app.route('/resources/download/<path:filename>')
+def resources_download(filename):
+    base_dir = os.path.join(os.path.dirname(__file__), 'resources', 'USABO')
+    return send_from_directory(base_dir, filename, as_attachment=True)
+
 
 # ✅ LAST lines of the file
 if __name__ == '__main__':
