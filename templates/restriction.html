@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>✂️ Restriction Enzyme Simulator</h2>
+
+<form method="POST">
+    <label for="sequence">Enter DNA Sequence:</label><br>
+    <textarea name="sequence" rows="6" cols="60">{{ request.form.sequence or "" }}</textarea><br><br>
+
+    <label>Select Enzyme(s):</label><br>
+    <select name="enzymes" multiple size="10">
+        {% for enzyme in enzymes %}
+            <option value="{{ enzyme }}"
+                {% if enzyme in request.form.getlist('enzymes') %}selected{% endif %}>
+                {{ enzyme }}
+            </option>
+        {% endfor %}
+    </select>
+
+
+    <br><button type="submit">Simulate</button>
+</form>
+
+{% if message %}
+    <h3>{{ message }}</h3>
+{% endif %}
+
+{% if results %}
+    {% for enzyme, data in results.items() %}
+        <h4>{{ enzyme }}</h4>
+        <p><strong>Cut Sites:</strong> {{ data.cut_sites }}</p>
+        <p><strong>Fragment Sizes (bp):</strong> {{ data.fragment_lengths }}</p>
+    {% endfor %}
+{% endif %}
+{% endblock %}

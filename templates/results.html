@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Analysis Results</h2>
+
+<p><strong>GC Content:</strong> {{ gc_content }}%</p>
+<p><strong>Protein Sequence:</strong> {{ protein }}</p>
+
+<h3>
+  {% if graph_type == 'codon' %}
+    Codon Usage Chart
+  {% else %}
+    Amino Acid Frequency Chart
+  {% endif %}
+</h3>
+
+{% if plot_filename %}
+  <img src="{{ url_for('static', filename=plot_filename) }}" alt="Generated Plot" style="max-width: 100%; border: 1px solid #ccc; padding: 10px;">
+{% else %}
+  <p>No graph available. Please check your input.</p>
+{% endif %}
+
+<br><br>
+<a href="/">⬅ Back to Home</a>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>📏 ORF Finder</h2>
+<form method="post">
+    <label>Paste DNA Sequence:</label><br>
+    <textarea name="sequence" rows="6" cols="60"></textarea><br><br>
+    <button type="submit">Find ORFs</button>
+</form>
+
+{% if results is not none %}
+    <h3>Open Reading Frames Found:</h3>
+    {% if results|length == 0 %}
+        <p>No ORFs found.</p>
+    {% else %}
+        <ul>
+        {% for orf in results %}
+            <li>
+                <strong>Start:</strong> {{ orf.start }},
+                <strong>End:</strong> {{ orf.end }},
+                <strong>Length:</strong> {{ orf.length }} bp<br>
+                <code>{{ orf.sequence }}</code>
+            </li>
+        {% endfor %}
+        </ul>
+
+        <h3>📊 ORF Visualization:</h3>
+        <img src="{{ url_for('static', filename=plot_filename) }}" alt="ORF Plot" style="max-width: 700px; margin-top: 20px;">
+    {% endif %}
+{% endif %}
+
+{% endblock %}

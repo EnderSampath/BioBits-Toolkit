@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>GC Skew Simulator</h2>
+<form method="post">
+    <label>Paste DNA Sequence:</label><br>
+    <textarea name="sequence" rows="6" cols="60"></textarea><br><br>
+    <button type="submit">Calculate GC Skew</button>
+</form>
+
+{% if result %}
+    <h3>Cleaned Sequence:</h3>
+    <p>{{ result.cleaned }}</p>
+
+    <h3>GC Skew Plot:</h3>
+    <img src="{{ url_for('static', filename=result.plot_filename) }}" alt="GC Skew Plot" style="max-width: 500px;">
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>🧪 Codon Usage & Amino Acid Analyzer</h2>
+
+<p><strong>Protein Translation:</strong> {{ protein }}</p>
+<p><strong>GC Content:</strong> {{ gc_content }}%</p>
+
+{% if plot_filename %}
+    <h3>Generated Plot ({{ graph_type | replace('_', ' ') | capitalize }})</h3>
+    <img src="{{ url_for('static', filename=plot_filename) }}" alt="Generated Plot" style="max-width: 100%; height: auto;">
+{% else %}
+    <p>No plot generated.</p>
+{% endif %}
+
+<a href="/">&#8592; Back to Analyze Another Sequence</a>
+<form method="post" action="/analyze" enctype="multipart/form-data">
+    <label>Paste DNA Sequence:</label><br>
+    <textarea name="sequence" rows="6" cols="60"></textarea><br><br>
+
+    <label>Or upload a FASTA/text file:</label>
+    <input type="file" name="file"><br><br>
+
+    <label>Select Graph Type:</label>
+    <select name="graph_type">
+        <option value="codon">Codon Usage</option>
+        <option value="amino_acid">Amino Acid Frequency</option>
+    </select><br><br>
+
+    <button type="submit">Analyze</button>
+</form>
+
+{% endblock %}
