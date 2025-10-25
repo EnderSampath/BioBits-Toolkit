@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import os
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from codon_table import CODON_TABLE
 from codon_utils import (clean_sequence, split_into_codons, translate_codons, count_codon_usage, calculate_gc_content, plot_codon_usage, count_amino_acid_frequency, plot_amino_acid_frequency)
